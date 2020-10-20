@@ -4,7 +4,7 @@
 
 int main(void)
 {	
-	setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "rua");
 	FILE* fileOpen = fopen("test.txt", "r");
 	char charInReal = '\0';
 	bool beginOfString = true;
