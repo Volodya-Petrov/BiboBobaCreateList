@@ -11,7 +11,7 @@ bool testList(void)
 	{
 		result = false;
 	}
-	if (indexOf(list, 8) != 1);
+	if (indexOf(list, 8) != 1)
 	{
 		result = false;
 	}

@@ -1,4 +1,5 @@
 ﻿#include "List.h"
+#include "testForList.h"
 #include "testForTask.h"
 #include "reverseList.h"
 #include "readFromFile.h"
@@ -19,6 +20,12 @@ void printList(List* list)
 int main(void)
 {	
 	setlocale(LC_ALL, "rus");
+	if (!testList())
+	{
+		printf("Тесты для списка провалены\n");
+		return 1;
+	}
+	printf("Тесты для списка пройдены успешно!\n");
 	if (testForTask())
 	{
 		printf("Тесты для задания провален\n");
