@@ -143,12 +143,14 @@
     <ClCompile Include="..\..\NewList\List\listTests.c" />
     <ClCompile Include="readFromFile.c" />
     <ClCompile Include="Test2Task2.c" />
+    <ClCompile Include="testForTask.c" />
     <ClCompile Include="transformList.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\NewList\List\List.h" />
     <ClInclude Include="..\..\NewList\List\listTests.h" />
     <ClInclude Include="readFromFile.h" />
+    <ClInclude Include="testForTask.h" />
     <ClInclude Include="transformList.h" />
   </ItemGroup>
   <ItemGroup>

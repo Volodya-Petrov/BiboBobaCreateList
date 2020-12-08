@@ -1,5 +1,5 @@
 #include "listTests.h"
-#include "../../List/List/List.h"
+#include "List.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -16,7 +16,7 @@ bool testList(void)
 		result = false;
 		printf("Первый тест для списка провален\n");
 	}
-	if (length(list) != 3)
+	if (length(list) != 4)
 	{
 		result = false;
 		printf("Второй тест для списка провален\n");
@@ -27,10 +27,10 @@ bool testList(void)
 		printf("Третий тест для списка провален\n");
 	}
 	deleteElement(list, 0);
-	if (length(list) != 2)
+	if (length(list) != 3)
 	{
 		result = false;
-		printf("Пятый тест для списка провален\n");
+		printf("Четвертый тест для списка провален\n");
 	}
 	deleteList(&list);
 	return result;
