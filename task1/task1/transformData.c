@@ -5,7 +5,7 @@ void transformToArray(int array[], List* list)
 {	
 	if (list == NULL)
 	{
-		return NULL;
+		return;
 	}
 	for (int i = 0; i < length(list); i++)
 	{	
