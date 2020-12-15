@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include "Node.h"
 
 typedef struct
@@ -15,9 +16,14 @@ Forest* createForest(char* string)
 	int table[256] = { 0 };
 	int stringLength = strlen(string);
 	for (int i = 0; i < stringLength; i++)
-	{
-		unsigned char charCode = (unsigned char)string[i];
-		table[charCode]++;
+	{	
+		char newChar = 'в';
+		string[i] = newChar;
+		if (('a' <= string[i] && string[i] <= 'z') || ('а' <= string[i] && string[i] <= 'я'))
+		{
+			unsigned char charCode = (unsigned char)string[i];
+			table[charCode]++;
+		}
 	}
 
 	// Create forest
@@ -36,9 +42,17 @@ Forest* createForest(char* string)
 	}
 	forest->length = valuableCount;
 	forest->nodes = malloc(sizeof(Node*) * valuableCount);
-	if (forest->nodes == NULL)
+	for (int i = 0; i < valuableCount; i++)
 	{
-		return NULL;
+		if (forest->nodes[i] == NULL)
+		{	
+			for (int j = 0; j < i; j++)
+			{
+				free(forest->nodes[j]);
+			}
+			free(forest);
+			return NULL;
+		}
 	}
 
 	// Fill the forest
@@ -115,9 +129,8 @@ void preorder(Node* root, char* path, int length, char* table[256])
 
 int main()
 {
-	char* string = "This is an example of Haffman Algoritm";
+	char* string = "Володя Докажите, что энтропия монетки принимает наибольшее значение для правильной монетки Петров";
 	Forest* forest = createForest(string);
-
 	for (int i = 0; i < forest->length; i++)
 	{
 		Node* node = forest->nodes[i];
