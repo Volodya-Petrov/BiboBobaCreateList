@@ -17,8 +17,7 @@ Forest* createForest(char* string)
 	int stringLength = strlen(string);
 	for (int i = 0; i < stringLength; i++)
 	{	
-		char newChar = 'â';
-		string[i] = newChar;
+		string[i] = tolower(string[i]);
 		if (('a' <= string[i] && string[i] <= 'z') || ('à' <= string[i] && string[i] <= 'ÿ'))
 		{
 			unsigned char charCode = (unsigned char)string[i];
