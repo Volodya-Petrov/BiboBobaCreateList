@@ -3,6 +3,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "Node.h"
+#include <locale.h>
 
 typedef struct
 {
@@ -17,7 +18,6 @@ Forest* createForest(char* string)
 	int stringLength = strlen(string);
 	for (int i = 0; i < stringLength; i++)
 	{	
-		string[i] = tolower(string[i]);
 		if (('a' <= string[i] && string[i] <= 'z') || ('а' <= string[i] && string[i] <= '€'))
 		{
 			unsigned char charCode = (unsigned char)string[i];
@@ -41,17 +41,10 @@ Forest* createForest(char* string)
 	}
 	forest->length = valuableCount;
 	forest->nodes = malloc(sizeof(Node*) * valuableCount);
-	for (int i = 0; i < valuableCount; i++)
+	if (forest->nodes == NULL)
 	{
-		if (forest->nodes[i] == NULL)
-		{	
-			for (int j = 0; j < i; j++)
-			{
-				free(forest->nodes[j]);
-			}
-			free(forest);
-			return NULL;
-		}
+		free(forest);
+		return NULL;
 	}
 
 	// Fill the forest
@@ -68,7 +61,7 @@ Forest* createForest(char* string)
 }
 
 Node* treeCreate(Forest* forest)
-{
+{	
 	while (forest->length > 1)
 	{
 		int min = 0;
@@ -109,26 +102,25 @@ Node* treeCreate(Forest* forest)
 	return forest->nodes[0];
 }
 
-void preorder(Node* root, char* path, int length, char* table[256])
+void preorder(Node* root, char* path, int length)
 {
 	if (root->symbol != '\0')
 	{	
-		char* copy = calloc(length + 1, sizeof(char));
-		strcpy(copy, path);
-		table[(unsigned)root->symbol] = copy;
+		printf("%c - %s\n", root->symbol, path);
 		return; 
 	}
 	path[length] = '0';
 	path[length + 1] = '\0';
-	preorder(root->left, path, length + 1, table);
+	preorder(root->left, path, length + 1);
 	path[length] = '1';
 	path[length + 1] = '\0';
-	preorder(root->right, path, length + 1, table);
+	preorder(root->right, path, length + 1);
 }
 
 int main()
 {
-	char* string = "¬олод€ ƒокажите, что энтропи€ монетки принимает наибольшее значение дл€ правильной монетки ѕетров";
+	setlocale(LC_ALL, "rus");
+	char string[] = "волод€ докажите, что энтропи€ монетки принимает наибольшее значение дл€ правильной монетки петров";
 	Forest* forest = createForest(string);
 	for (int i = 0; i < forest->length; i++)
 	{
@@ -136,17 +128,9 @@ int main()
 		printf("%c - %d; ", node->symbol, node->freq);
 	}
 	Node* root = treeCreate(forest);
-	char* table[256] = { 0 };
 	char path[256] = { 0 };
-	preorder(root, path, 0, table);
 	printf("\n");
-	for (int i = 0; i < 256; i++)
-	{
-		if (table[i] != NULL)
-		{
-			printf("%c - %s\n", i, table[i]);
-		}
-	}
+	preorder(root, path, 0);
 	free(forest->nodes);
 	free(forest);
 }
