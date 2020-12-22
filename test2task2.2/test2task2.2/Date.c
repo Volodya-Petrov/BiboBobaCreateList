@@ -73,3 +73,10 @@ void printDate(Date* date)
 	printf("Ìåñÿö: %i\n", date->month);
 	printf("Ãîä: %i\n", date->year);
 }
+
+void getDate(Date* date, int* day, int* month, int* year)
+{
+	*day = date->day;
+	*month = date->month;
+	*year = date->year;
+}
